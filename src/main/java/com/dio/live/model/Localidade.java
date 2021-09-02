@@ -20,4 +20,5 @@ public class Localidade {
     @ManyToOne
     private NivelAcesso nivelAcesso;
     private String descricao;
+
 }

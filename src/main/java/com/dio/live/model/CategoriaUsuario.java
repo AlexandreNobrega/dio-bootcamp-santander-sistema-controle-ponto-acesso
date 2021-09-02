@@ -17,5 +17,7 @@ import javax.persistence.Id;
 public class CategoriaUsuario {
     @Id
     private long id;
+
     private String descricao;
+
 }

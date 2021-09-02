@@ -17,8 +17,10 @@ import java.time.LocalDateTime;
 public class Calendario {
     @Id
     private Long id;
+
     @ManyToOne
     private TipoData tipoData;
     private String descricao;
     private LocalDateTime dataEspecial;
+
 }

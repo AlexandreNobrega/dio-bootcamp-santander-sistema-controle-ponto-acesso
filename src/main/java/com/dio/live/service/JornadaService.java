@@ -11,7 +11,6 @@ import java.util.Optional;
 @Service
 public class JornadaService {
 
-
     JornadaRepository jornadaRepository;
 
     @Autowired
