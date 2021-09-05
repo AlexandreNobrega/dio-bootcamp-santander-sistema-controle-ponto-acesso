@@ -3,6 +3,7 @@ package com.dio.live.model;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Getter
@@ -13,7 +14,10 @@ import javax.persistence.Id;
 @Builder
 @Entity
 public class TipoData {
+
     @Id
+    @GeneratedValue
     private long id;
+
     private String descricao;
 }

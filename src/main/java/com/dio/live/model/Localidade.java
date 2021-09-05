@@ -2,10 +2,8 @@ package com.dio.live.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -15,10 +13,15 @@ import javax.persistence.OneToMany;
 @Builder
 @Entity
 public class Localidade {
+
     @Id
+    @GeneratedValue
     private  long id;
-    @ManyToOne
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private NivelAcesso nivelAcesso;
+
     private String descricao;
 
 }

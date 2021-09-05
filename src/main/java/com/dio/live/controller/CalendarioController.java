@@ -1,15 +1,14 @@
 package com.dio.live.controller;
 
 import com.dio.live.model.Calendario;
-import com.dio.live.model.Usuario;
 import com.dio.live.repository.CalendarioRepository;
 import com.dio.live.service.CalendarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -23,7 +22,7 @@ public class CalendarioController {
     CalendarioService calendarioService;
 
     @PostMapping
-    public Calendario createCalendario(@RequestBody Calendario calendario) {
+    public Calendario createCalendario(@Valid @RequestBody Calendario calendario) {
         return calendarioService.saveCalendario(calendario);
     }
 
@@ -33,8 +32,14 @@ public class CalendarioController {
     }
 
     @GetMapping("/{idCalendario}")
-    public ResponseEntity<Calendario> getUsuarioByID(@PathVariable("idCalendario") Long idCalendario) throws Exception {
-        return ResponseEntity.ok(calendarioService.getById(idCalendario).orElseThrow(() -> new NoSuchElementException("Not found!")));
+    public ResponseEntity<Calendario> getUsuarioByID(@PathVariable("idCalendario") Long idCalendario) {
+        Optional<Calendario> calendario = this.calendarioRepository.findById(idCalendario);
+
+        if (calendario.isPresent()) {
+            return ResponseEntity.ok(calendario.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping

@@ -1,9 +1,12 @@
 package com.dio.live.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -16,21 +19,20 @@ import java.time.LocalDateTime;
 @Entity
 public class Movimentacao {
 
-        @AllArgsConstructor
-        @NoArgsConstructor
-        @EqualsAndHashCode
-        @Embeddable
-        public  class  MovimentacaoId implements Serializable{
-            private long idMovimentacao;
-            private long idUsuario;
-        }
-
         @Id
-        @EmbeddedId
-        private MovimentacaoId movimentacaoId;
+        @GeneratedValue
+        private Long id;
 
+        @ManyToOne
+        @NotNull
+        private Usuario usuario;
+
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
         private LocalDateTime dataEntrada;
 
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
         private LocalDateTime dataSaida;
 
         private BigDecimal periodo;

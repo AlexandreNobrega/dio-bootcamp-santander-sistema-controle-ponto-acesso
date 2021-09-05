@@ -1,15 +1,14 @@
 package com.dio.live.controller;
 
 import com.dio.live.model.BancoHoras;
-import com.dio.live.model.Usuario;
 import com.dio.live.repository.BancoHorasRepository;
 import com.dio.live.service.BancoHorasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -23,7 +22,7 @@ public class BancoHorasController {
     BancoHorasService bancoHorasService;
 
     @PostMapping
-    public BancoHoras createBancoHoras(@RequestBody BancoHoras bancoHoras) {
+    public BancoHoras createBancoHoras(@Valid @RequestBody BancoHoras bancoHoras) {
         return bancoHorasService.saveBancoHoras(bancoHoras);
     }
 
@@ -33,8 +32,14 @@ public class BancoHorasController {
     }
 
     @GetMapping("/{idBancoHoras}")
-    public ResponseEntity<BancoHoras> getBancoHorasByID(@PathVariable("idBancoHoras") Long idBancoHoras) throws Exception {
-        return ResponseEntity.ok(bancoHorasService.getById(idBancoHoras).orElseThrow(() -> new NoSuchElementException("Not found!")));
+    public ResponseEntity<BancoHoras> getBancoHorasByID(@PathVariable("idBancoHoras") Long idBancoHoras) {
+        Optional<BancoHoras> bancoHoras = this.bancoHorasRepository.findById(idBancoHoras);
+
+        if (bancoHoras.isPresent()) {
+            return ResponseEntity.ok(bancoHoras.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping
@@ -53,5 +58,4 @@ public class BancoHorasController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

@@ -1,7 +1,6 @@
 package com.dio.live.service;
 
 import com.dio.live.model.BancoHoras;
-import com.dio.live.model.JornadaTrabalho;
 import com.dio.live.repository.BancoHorasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +37,4 @@ public class BancoHorasService {
     public void deleteBancoHoras(Long idBancoHoras) {
         bancoHorasRepository.deleteById(idBancoHoras);
     }
-
 }
